@@ -1,0 +1,186 @@
+
+
+import java_cup.runtime.*;
+import java.io.*;
+
+
+
+
+parser code {:
+    public boolean isCorrect = true;
+
+    // Redefinition of error functions
+    public void report_error(String message, Object info) {
+        isCorrect = false;
+        System.err.print("ERROR: Syntax error");
+        if (info instanceof Symbol)
+            if (((Symbol)info).left != -1){
+                int line = (((Symbol)info).left)+1;
+                int column = (((Symbol)info).right)+1;
+                System.err.print(" (linea "+line+", colonna "+column+"): ");
+            } else System.err.print(": ");
+        else System.err.print(": ");
+    }
+
+    public void report_expected_token_ids() {
+    }
+    :};
+
+
+
+// Terminal tokens
+terminal INT, DOUBLE, ID;
+terminal PRINT, IF, WHILE, ELSE;
+terminal RO, RC, BO, BC, SC, CM, SO, S;
+terminal PLUS, MINUS, STAR, DIV;
+terminal MIN, MAJ, MIN_EQ, EQ_MIN, MAJ_EQ, EQ_MAJ, EQ;
+terminal AND, OR, NOT;
+terminal INT_TYPE, DOUBLE_TYPE;
+terminal UMINUS;
+
+// Non terminal tokens
+non terminal prog, stmt_list, stmt, if, while, assignment, print;
+non terminal exp;
+non terminal mineq, mageq;
+
+non terminal decl_list, decl, var_list, var;
+non terminal type, array;
+non terminal if_condition, while_condition;
+non terminal id;
+
+// Precedences and associativities
+// lower precedences
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left MIN, MAJ, MIN_EQ, EQ_MIN, MAJ_EQ, EQ_MAJ, EQ;
+precedence left PLUS, MINUS;
+precedence left STAR, DIV;
+precedence left UMINUS;
+// higher precedences
+
+
+//////////////////////////////////////
+// Grammar start
+//////////////////////////////////////
+
+start with prog;
+
+
+prog ::= decl_list stmt_list {: if(parser.isCorrect) System.out.println("Program correctly recognized"); :}
+;
+
+
+//////////////////////////////////////
+// Declarations
+//////////////////////////////////////
+
+decl_list ::= decl_list decl | 
+;
+
+decl ::= type var_list S | type error S {:System.err.println("Declaration error");:}
+;
+
+type ::= INT_TYPE | DOUBLE_TYPE
+;
+
+var_list ::= var | var_list CM var
+;
+
+var ::= ID array
+;
+
+array ::= | array SO INT SC
+;
+
+
+//////////////////////////////////////
+// Instructions
+//////////////////////////////////////
+
+stmt_list ::= stmt_list stmt | stmt 
+| error stmt {:System.err.println("Generic statement error");:}
+;
+
+
+stmt ::= if | while | assignment | print | BO stmt_list BC
+| error S {:System.err.println("Generic statement error");:}
+;
+
+// Assignment instruction
+assignment ::= id S 
+| id EQ exp S  
+| id EQ error S {:System.err.println("Error in expression");:}
+| error EQ exp S {:System.err.println("Error in assignment");:}
+;
+
+// PRINT instruction
+print ::= PRINT id S 
+| PRINT error S {:System.err.println("Error in print");:}
+;
+
+
+// IF instruction
+if ::= IF if_condition stmt ELSE stmt
+     | IF if_condition stmt
+     | IF if_condition error stmt {:System.err.println("Error ELSE expected in IF instruction");:}
+;
+
+if_condition ::= RO exp RC
+| error exp RC {:System.err.println("Expected '(' in IF condition");:}
+| RO exp error {:System.err.println("Expected ')' in IF condition");:}
+| RO error RC {:System.err.println("IF condition error");:}
+;
+
+
+// WHILE instruction
+while ::= WHILE while_condition stmt
+| WHILE while_condition error {:System.err.println("WHILE statement error");:}
+;
+
+while_condition ::= RO exp RC
+| error exp RC {:System.err.println("Expected '(' in WHILE condition");:}
+| RO exp error {:System.err.println("Expected ')' in WHILE condition");:}
+| RO error RC {:System.err.println("WHILE condition error");:}
+;
+
+
+// Expressions
+exp ::= 
+    /* Espressioni logiche */
+    exp AND exp
+    | exp OR exp
+    | NOT exp
+
+    /* Espressioni di confronto */
+    | exp EQ EQ exp
+    | exp MIN exp
+    | exp MAJ exp
+    | exp mineq exp
+    | exp mageq exp
+
+    /* Espressioni aritmetiche */
+    | exp PLUS exp
+    | exp MINUS exp
+    | exp STAR exp
+    | exp DIV exp
+    | RO exp RC
+    | id
+    | INT
+    | DOUBLE
+    | MINUS INT %prec UMINUS
+    | MINUS DOUBLE %prec UMINUS
+    | RO error RC {:System.err.println("Error in expression");:}
+;
+
+
+mineq ::= MIN_EQ | EQ_MIN;
+mageq ::= MAJ_EQ | EQ_MAJ;
+
+
+id ::= ID
+      |ID SO INT SC
+      |ID SO ID SC
+      |error SC  {:System.err.println("Error in vector");:}
+      |ID SO error SC  {:System.err.println("Wrong expression in '[ ]'");:}
+;

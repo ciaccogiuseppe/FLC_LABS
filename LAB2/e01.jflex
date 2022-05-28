@@ -6,7 +6,8 @@
 WS = [\ \t]
 NL = \r|\n|\r\n
 Comment = \/\*.*\*\/
-Keyword = int|double|if|else|while|print
+Keyword = if|else|while|print
+Type = int|double
 CO = \{
 CC = \}
 SO = \[
@@ -36,6 +37,7 @@ Double = [+-]?([0-9]*[.])?[0-9]+
 %%
 {Comment} {;}
 {Keyword} {System.out.print(yytext().toUpperCase()+" ");}
+{Type} {System.out.print(yytext().toUpperCase()+"_TYPE ");}
 {CO} {System.out.print("CO ");}
 {CC} {System.out.print("CC ");}
 {SO} {System.out.print("SO ");}

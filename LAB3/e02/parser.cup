@@ -1,0 +1,16 @@
+import java_cup.runtime.*;
+
+terminal SEP, ISBN, S, NAME, INT, COLLOCATION, LISTBEG, CC, C, DATE;
+non terminal SS, P1, P2, LWB, LB, B, LL, LBL, L;
+start with SS;
+
+SS ::= P1 SEP P2 {:System.out.println("FILE CORRECTLY PARSED");:};
+P1 ::= LWB;
+LWB ::= NAME LISTBEG LB S LWB |;
+LB ::= B C LB | B;
+B ::= ISBN CC NAME CC INT CC COLLOCATION | ISBN CC NAME CC INT;
+
+P2 ::= LL;
+LL ::= NAME CC LBL S LL|;
+LBL ::= L C LBL | L;
+L ::= DATE ISBN;

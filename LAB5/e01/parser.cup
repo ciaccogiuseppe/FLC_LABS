@@ -1,0 +1,141 @@
+
+
+import java_cup.runtime.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Vector;
+
+init with {:
+    symbol_table = new HashMap();
+:}
+
+parser code {:
+    public HashMap symbol_table;
+
+    // Redefinition of error functions
+    public void report_error(String message, Object info) {
+        //isCorrect = false;
+        System.err.print("ERROR: Syntax error");
+        if (info instanceof Symbol)
+            if (((Symbol)info).left != -1){
+                int line = (((Symbol)info).left)+1;
+                int column = (((Symbol)info).right)+1;
+                System.err.print(" (linea "+line+", colonna "+column+"): ");
+            } else System.err.print(": ");
+        else System.err.print(": ");
+    }
+
+    //public void report_expected_token_ids() {
+    //}
+    :};
+
+
+
+// Terminal tokens
+terminal    EQ,
+            S,
+            IM,
+            SCALAR,
+            SO,
+            SC,
+            CM,
+            SCALVAR,
+            VECVAR;
+terminal EXP, DIV, MUL, DOT, PLUS, MINUS, UMINUS;
+
+// Non terminal tokens
+non terminal    calc,
+                vector,
+                vec_int,
+                scexpr,
+                vexpr,
+                operations,
+                operation,
+                scalop,
+                vecop,
+                assign;
+
+
+// Precedences and associativities
+// lower precedences
+precedence left EXP;
+precedence left MUL;
+precedence left DIV;
+precedence left DOT;
+precedence left PLUS;
+precedence left MINUS;
+//precedence left UMINUS;
+// higher precedences
+
+
+//////////////////////////////////////
+// Grammar start
+//////////////////////////////////////
+
+start with calc;
+calc ::= operations IM {:System.out.println("Correctly parsed");:};
+operations ::= operations operation| operation;
+operation ::= vexpr:x {:System.out.println("Vector expression: [" + ((Double[])x)[0] + "," + ((Double[])x)[1] + "]");:} S |
+    scexpr:x {:System.out.println("Scalar expression: " + x);:} S |
+    assign S;
+
+vector ::= SO vec_int:a CM vec_int:b SC {:/*System.out.println("A: " + a + " - B: " + b);*/
+    RESULT = new Double[2];
+    ((Double[])RESULT)[0] = (Double)a;
+    ((Double[])RESULT)[1] = (Double)b;:};
+vec_int ::= scexpr:x {:RESULT = x;:};
+scexpr ::= 
+    scexpr:a MUL scexpr:b  {:RESULT = (Double)a * (Double)b;:}|
+    scexpr:a PLUS scexpr:b  {:RESULT = (Double)a + (Double)b;:}|
+    scexpr:a MINUS scexpr:b  {:RESULT = (Double)a - (Double)b;:}|
+    scexpr:a DIV scexpr:b  {:RESULT = (Double)a / (Double)b;:}|
+    scexpr:a EXP scexpr:b  {:RESULT = Math.pow((Double)a,(Double)b);:}|
+    MINUS scexpr:a {:RESULT = -(Double)a;:} %prec UMINUS|
+    vexpr:a DOT vexpr:b {:
+        RESULT = ((Double[])a)[0] * ((Double[])b)[0] +
+        ((Double[])a)[1] * ((Double[])b)[1];:}|
+    scalop:x {:RESULT = x;:}
+;
+
+vexpr ::= 
+    scexpr:a MUL vexpr:b {:
+        RESULT = new Double[2];
+        ((Double[])RESULT)[0] = (Double)((Double)a * ((Double[])b)[0]);
+        ((Double[])RESULT)[1] = (Double)a * ((Double[])b)[1];
+    :}|
+    vexpr:b MUL scexpr:a {:
+        RESULT = new Double[2];
+        ((Double[])RESULT)[0] = (Double)((Double)a * ((Double[])b)[0]);
+        ((Double[])RESULT)[1] = (Double)a * ((Double[])b)[1];
+    :}|
+    scexpr:a DIV vexpr:b {:
+        RESULT = new Double[2];
+        ((Double[])RESULT)[0] = (Double)a / ((Double[])b)[0];
+        ((Double[])RESULT)[1] = (Double)a / ((Double[])b)[1];
+    :}|
+    vexpr:b DIV scexpr:a {:
+        RESULT = new Double[2];
+        ((Double[])RESULT)[0] = (Double)a / ((Double[])b)[0];
+        ((Double[])RESULT)[1] = (Double)a / ((Double[])b)[1];
+    :}|
+    vexpr:a PLUS vexpr:b {:
+        RESULT = new Double[2];
+        ((Double[])RESULT)[0] = ((Double[])a)[0] + ((Double[])b)[0];
+        ((Double[])RESULT)[1] = ((Double[])a)[1] + ((Double[])b)[1];
+    :}|
+    vexpr:a MINUS vexpr:b {:
+        RESULT = new Double[2];
+        ((Double[])RESULT)[0] = ((Double[])a)[0] - ((Double[])b)[0];
+        ((Double[])RESULT)[1] = ((Double[])a)[1] - ((Double[])b)[1];
+    :}|
+    vecop:x {:RESULT = new Double[2];
+        ((Double[])RESULT)[0] = ((Double[])x)[0];
+        ((Double[])RESULT)[1] = ((Double[])x)[1];:}
+;
+
+vecop ::= VECVAR:a {:RESULT = parser.symbol_table.get(a);:} |
+    vector:x {:RESULT = x;:};
+scalop ::= SCALVAR:a {:RESULT = parser.symbol_table.get(a);:} | SCALAR:x {:RESULT = x;:};
+assign ::= SCALVAR:a EQ scexpr:x {: System.out.println("Assignment: "+x); parser.symbol_table.put(a, x); :}|
+    VECVAR:a EQ vexpr:x
+        {:System.out.println("Assignment: [" + ((Double[])x)[0] + "," + ((Double[])x)[1] + "]"); parser.symbol_table.put(a,x);:};

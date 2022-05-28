@@ -1,0 +1,73 @@
+
+
+import java_cup.runtime.*;
+import java.io.*;
+
+
+
+
+parser code {:
+    public boolean isCorrect = true;
+
+    // Redefinition of error functions
+    public void report_error(String message, Object info) {
+        isCorrect = false;
+        System.err.print("ERROR: Syntax error");
+        if (info instanceof Symbol)
+            if (((Symbol)info).left != -1){
+                int line = (((Symbol)info).left)+1;
+                int column = (((Symbol)info).right)+1;
+                System.err.print(" (linea "+line+", colonna "+column+"): ");
+            } else System.err.print(": ");
+        else System.err.print(": ");
+    }
+
+    //public void report_expected_token_ids() {
+    //}
+    :};
+
+
+
+// Terminal tokens
+terminal RO, RC, DOT, CM;
+terminal RUL, INT, ATOM, VAR;
+
+// Non terminal tokens
+non terminal prog, prog_str, interrogation, int;
+non terminal element, elements, predlist, rule, arg, fact, predicate, functor, arg_list;
+
+// Precedences and associativities
+// lower precedences
+//precedence left OR;
+//precedence left AND;
+//precedence left NOT;
+//precedence left MIN, MAJ, MIN_EQ, EQ_MIN, MAJ_EQ, EQ_MAJ, EQ;
+//precedence left PLUS, MINUS;
+//precedence left STAR, DIV;
+//precedence left UMINUS;
+// higher precedences
+
+
+//////////////////////////////////////
+// Grammar start
+//////////////////////////////////////
+
+start with prog;
+
+
+prog ::= prog_str 
+{: if(parser.isCorrect) System.out.println("Program correctly recognized"); :};
+prog_str ::= elements interrogation elements;
+elements ::= | elements element;
+element  ::= fact | rule;
+
+
+fact ::= predicate DOT;
+predicate ::= ATOM RO arg_list RC | ATOM;
+
+arg_list ::= arg_list CM arg | arg;
+arg ::= predicate | VAR;
+
+rule ::= predicate RUL predlist DOT;
+predlist ::= predlist CM predicate | predicate;
+interrogation ::= INT predlist DOT;

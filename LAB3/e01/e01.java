@@ -30,12 +30,12 @@ class e01 {
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\11\0\1\1\1\3\1\6\1\6\1\2\22\0\1\1\1\44\4\0"+
-    "\1\42\1\0\1\32\1\33\1\5\1\36\1\0\1\37\1\50\1\4"+
-    "\1\46\11\47\1\0\1\34\1\40\1\35\1\41\2\0\32\45\1\30"+
-    "\1\0\1\31\1\0\1\45\1\0\1\45\1\25\1\45\1\22\1\11"+
-    "\1\10\1\45\1\15\1\7\2\45\1\12\1\45\1\20\1\23\1\16"+
-    "\1\45\1\17\1\13\1\21\1\24\1\45\1\14\3\45\1\26\1\43"+
+    "\11\0\1\1\1\3\1\6\1\6\1\2\22\0\1\1\1\45\4\0"+
+    "\1\43\1\0\1\32\1\33\1\5\1\37\1\35\1\40\1\51\1\4"+
+    "\1\47\11\50\1\0\1\34\1\41\1\36\1\42\2\0\32\46\1\30"+
+    "\1\0\1\31\1\0\1\46\1\0\1\46\1\25\1\46\1\22\1\11"+
+    "\1\10\1\46\1\15\1\7\2\46\1\12\1\46\1\20\1\23\1\16"+
+    "\1\46\1\17\1\13\1\21\1\24\1\46\1\14\3\46\1\26\1\44"+
     "\1\27\7\0\1\6\u1fa2\0\1\6\1\6\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
 
   /** 
@@ -51,12 +51,12 @@ class e01 {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\2\2\1\3\1\4\6\5\1\6\1\7"+
     "\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17"+
-    "\1\20\1\21\1\22\1\23\1\24\2\25\1\1\1\0"+
-    "\1\26\5\5\1\27\1\30\1\0\1\31\1\32\2\33"+
-    "\1\0\1\34\4\5\1\2\3\5";
+    "\1\20\1\21\1\22\1\23\1\24\1\25\2\26\1\1"+
+    "\1\0\1\27\5\5\1\30\1\31\1\0\1\32\1\33"+
+    "\2\34\1\0\1\35\4\5\1\2\3\5";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[54];
+    int [] result = new int[55];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -81,16 +81,16 @@ class e01 {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\51\0\51\0\122\0\173\0\51\0\244\0\315"+
-    "\0\366\0\u011f\0\u0148\0\u0171\0\51\0\51\0\51\0\51"+
-    "\0\51\0\51\0\51\0\u019a\0\u01c3\0\u01c3\0\u01ec\0\u0215"+
-    "\0\51\0\51\0\51\0\u023e\0\u0267\0\u0290\0\u02b9\0\315"+
-    "\0\u02e2\0\u030b\0\u0334\0\u035d\0\u0386\0\51\0\51\0\u0290"+
-    "\0\51\0\51\0\u023e\0\u0290\0\u03af\0\315\0\u03d8\0\u0401"+
-    "\0\u042a\0\u0453\0\u02b9\0\u047c\0\u04a5\0\u04ce";
+    "\0\0\0\52\0\52\0\124\0\176\0\52\0\250\0\322"+
+    "\0\374\0\u0126\0\u0150\0\u017a\0\52\0\52\0\52\0\52"+
+    "\0\52\0\52\0\52\0\52\0\u01a4\0\u01ce\0\u01ce\0\u01f8"+
+    "\0\u0222\0\52\0\52\0\52\0\u024c\0\u0276\0\u02a0\0\u02ca"+
+    "\0\322\0\u02f4\0\u031e\0\u0348\0\u0372\0\u039c\0\52\0\52"+
+    "\0\u02a0\0\52\0\52\0\u024c\0\u02a0\0\u03c6\0\322\0\u03f0"+
+    "\0\u041a\0\u0444\0\u046e\0\u02ca\0\u0498\0\u04c2\0\u04ec";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[54];
+    int [] result = new int[55];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -117,28 +117,28 @@ class e01 {
     "\1\10\1\11\2\10\1\12\1\10\1\13\3\10\1\14"+
     "\3\10\1\15\1\16\1\17\1\20\1\21\1\22\1\23"+
     "\1\24\1\25\1\26\1\27\1\30\1\31\1\32\1\33"+
-    "\1\10\1\34\1\35\1\36\54\0\1\3\52\0\1\37"+
-    "\52\0\1\10\1\40\7\10\1\41\5\10\17\0\3\10"+
-    "\10\0\17\10\17\0\3\10\10\0\3\10\1\42\13\10"+
-    "\17\0\3\10\10\0\6\10\1\43\10\10\17\0\3\10"+
-    "\10\0\10\10\1\44\6\10\17\0\3\10\10\0\14\10"+
-    "\1\45\2\10\17\0\3\10\41\0\1\46\1\47\55\0"+
-    "\1\34\1\35\1\50\35\0\1\51\50\0\1\52\61\0"+
-    "\2\53\1\50\46\0\2\35\1\50\46\0\2\54\1\0"+
-    "\2\37\2\0\1\37\1\55\1\0\42\37\7\0\12\10"+
-    "\1\56\4\10\17\0\3\10\10\0\4\10\1\57\12\10"+
-    "\17\0\3\10\10\0\1\60\16\10\17\0\3\10\10\0"+
-    "\1\61\16\10\17\0\3\10\10\0\15\10\1\62\1\10"+
-    "\17\0\3\10\1\0\2\37\2\0\1\63\1\55\1\0"+
-    "\42\37\7\0\2\10\1\40\14\10\17\0\3\10\10\0"+
-    "\3\10\1\57\13\10\17\0\3\10\10\0\11\10\1\64"+
-    "\5\10\17\0\3\10\10\0\16\10\1\65\17\0\3\10"+
-    "\10\0\12\10\1\40\4\10\17\0\3\10\10\0\3\10"+
-    "\1\66\13\10\17\0\3\10\10\0\2\10\1\56\14\10"+
-    "\17\0\3\10\1\0";
+    "\1\34\1\10\1\35\1\36\1\37\55\0\1\3\53\0"+
+    "\1\40\53\0\1\10\1\41\7\10\1\42\5\10\20\0"+
+    "\3\10\10\0\17\10\20\0\3\10\10\0\3\10\1\43"+
+    "\13\10\20\0\3\10\10\0\6\10\1\44\10\10\20\0"+
+    "\3\10\10\0\10\10\1\45\6\10\20\0\3\10\10\0"+
+    "\14\10\1\46\2\10\20\0\3\10\42\0\1\47\1\50"+
+    "\56\0\1\35\1\36\1\51\36\0\1\52\51\0\1\53"+
+    "\62\0\2\54\1\51\47\0\2\36\1\51\47\0\2\55"+
+    "\1\0\2\40\2\0\1\40\1\56\1\0\43\40\7\0"+
+    "\12\10\1\57\4\10\20\0\3\10\10\0\4\10\1\60"+
+    "\12\10\20\0\3\10\10\0\1\61\16\10\20\0\3\10"+
+    "\10\0\1\62\16\10\20\0\3\10\10\0\15\10\1\63"+
+    "\1\10\20\0\3\10\1\0\2\40\2\0\1\64\1\56"+
+    "\1\0\43\40\7\0\2\10\1\41\14\10\20\0\3\10"+
+    "\10\0\3\10\1\60\13\10\20\0\3\10\10\0\11\10"+
+    "\1\65\5\10\20\0\3\10\10\0\16\10\1\66\20\0"+
+    "\3\10\10\0\12\10\1\41\4\10\20\0\3\10\10\0"+
+    "\3\10\1\67\13\10\20\0\3\10\10\0\2\10\1\57"+
+    "\14\10\20\0\3\10\1\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1271];
+    int [] result = new int[1302];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -176,12 +176,12 @@ class e01 {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\2\11\2\1\1\11\6\1\7\11\5\1\3\11"+
+    "\1\0\2\11\2\1\1\11\6\1\10\11\5\1\3\11"+
     "\3\1\1\0\6\1\2\11\1\0\2\11\2\1\1\0"+
     "\11\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[54];
+    int [] result = new int[55];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -575,142 +575,147 @@ class e01 {
             { System.out.print(yytext());
             } 
             // fall through
-          case 29: break;
+          case 30: break;
           case 2: 
             { ;
             } 
             // fall through
-          case 30: break;
+          case 31: break;
           case 3: 
             { System.out.print("DIV ");
             } 
             // fall through
-          case 31: break;
+          case 32: break;
           case 4: 
             { System.out.print("STAR ");
             } 
             // fall through
-          case 32: break;
+          case 33: break;
           case 5: 
             { System.out.print("ID:"+yytext()+" ");
             } 
             // fall through
-          case 33: break;
+          case 34: break;
           case 6: 
             { System.out.print("CO ");
             } 
             // fall through
-          case 34: break;
+          case 35: break;
           case 7: 
             { System.out.print("CC ");
             } 
             // fall through
-          case 35: break;
+          case 36: break;
           case 8: 
             { System.out.print("SO ");
             } 
             // fall through
-          case 36: break;
+          case 37: break;
           case 9: 
             { System.out.print("SC ");
             } 
             // fall through
-          case 37: break;
+          case 38: break;
           case 10: 
             { System.out.print("RO ");
             } 
             // fall through
-          case 38: break;
+          case 39: break;
           case 11: 
             { System.out.print("RC ");
             } 
             // fall through
-          case 39: break;
+          case 40: break;
           case 12: 
             { System.out.print("S ");
             } 
             // fall through
-          case 40: break;
-          case 13: 
-            { System.out.print("EQ ");
-            } 
-            // fall through
           case 41: break;
-          case 14: 
-            { System.out.print("PLUS ");
+          case 13: 
+            { System.out.print("C ");
             } 
             // fall through
           case 42: break;
-          case 15: 
-            { System.out.print("MINUS ");
+          case 14: 
+            { System.out.print("EQ ");
             } 
             // fall through
           case 43: break;
-          case 16: 
-            { System.out.print("LT ");
+          case 15: 
+            { System.out.print("PLUS ");
             } 
             // fall through
           case 44: break;
-          case 17: 
-            { System.out.print("GT ");
+          case 16: 
+            { System.out.print("MINUS ");
             } 
             // fall through
           case 45: break;
-          case 18: 
-            { System.out.print("AND ");
+          case 17: 
+            { System.out.print("LT ");
             } 
             // fall through
           case 46: break;
-          case 19: 
-            { System.out.print("OR ");
+          case 18: 
+            { System.out.print("GT ");
             } 
             // fall through
           case 47: break;
-          case 20: 
-            { System.out.print("NOT ");
+          case 19: 
+            { System.out.print("AND ");
             } 
             // fall through
           case 48: break;
-          case 21: 
-            { System.out.print("INT:"+yytext()+" ");
+          case 20: 
+            { System.out.print("OR ");
             } 
             // fall through
           case 49: break;
-          case 22: 
-            { System.out.print(yytext().toUpperCase()+" ");
+          case 21: 
+            { System.out.print("NOT ");
             } 
             // fall through
           case 50: break;
-          case 23: 
-            { System.out.print("EQL ");
+          case 22: 
+            { System.out.print("INT:"+yytext()+" ");
             } 
             // fall through
           case 51: break;
-          case 24: 
-            { System.out.print("EQG ");
+          case 23: 
+            { System.out.print(yytext().toUpperCase()+" ");
             } 
             // fall through
           case 52: break;
-          case 25: 
-            { System.out.print("LEQ ");
+          case 24: 
+            { System.out.print("EQL ");
             } 
             // fall through
           case 53: break;
-          case 26: 
-            { System.out.print("GEQ ");
+          case 25: 
+            { System.out.print("EQG ");
             } 
             // fall through
           case 54: break;
-          case 27: 
-            { System.out.print("DOUBLE:"+yytext()+" ");
+          case 26: 
+            { System.out.print("LEQ ");
             } 
             // fall through
           case 55: break;
-          case 28: 
-            { System.out.print(yytext().toUpperCase()+"_TYPE ");
+          case 27: 
+            { System.out.print("GEQ ");
             } 
             // fall through
           case 56: break;
+          case 28: 
+            { System.out.print("DOUBLE:"+yytext()+" ");
+            } 
+            // fall through
+          case 57: break;
+          case 29: 
+            { System.out.print(yytext().toUpperCase()+"_TYPE ");
+            } 
+            // fall through
+          case 58: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

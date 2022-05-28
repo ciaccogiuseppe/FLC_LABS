@@ -1,0 +1,62 @@
+import java_cup.runtime.*;
+
+terminal    CO, CC, SO, SC, RO, RC, S, C,
+            EQ, PLUS, MINUS, STAR, DIV,
+            LT, GT, LEQ, GEQ, EQL, EQG,
+            AND, EQEQ, OR, NOT, ID,
+            INT_TYPE, DOUBLE_TYPE, INT, DOUBLE,
+            IF, ELSE, WHILE, PRINT, UMINUS;
+non terminal PROG, DECL, INSTRS, TYPE, VARLIST, IFST, VAR, AVAR, INSTR, ASSIGN, PRINTS, WHILELOOP, CONDITION, COMPARE, OPERATOR, EXP;
+
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left LT, GT, LEQ, GEQ, EQL, EQG, EQEQ, EQ;
+precedence left PLUS, MINUS;
+precedence left STAR, DIV;
+precedence left UMINUS;
+
+start with PROG;
+
+PROG ::= DECL INSTRS {:System.out.println("CORRECT PROGRAM");:};
+
+
+DECL        ::= TYPE VARLIST S DECL |;
+TYPE        ::= INT_TYPE | DOUBLE_TYPE;
+VARLIST     ::= VAR C VARLIST | VAR;
+VAR         ::= ID | ID SO INT SC;
+
+
+INSTRS      ::= INSTRS INSTR | INSTR ;
+INSTR       ::= ASSIGN | WHILELOOP | IFST | CO INSTRS CC | PRINTS |;
+ASSIGN      ::= AVAR EQ INT S| AVAR EQ DOUBLE S | AVAR EQ EXP S;
+AVAR        ::= VAR | ID SO ID SC;
+VAREXP      ::= AVAR | INT | DOUBLE;
+
+WHILELOOP   ::= WHILE RO CONDITION RC CO INSTRS CC;
+IFST        ::= IF RO CONDITION RC INSTR ELSE INSTR | IF RO CONDITION RC INSTR;
+CONDITION   ::= INT | DOUBLE | COMPARE;
+COMPARE     ::= EXP OPERATOR EXP;
+PRINTS      ::= PRINT RO AVAR RC S;
+OPERATOR    ::= EQ | PLUS | MINUS | STAR | DIV | LT | GT | LEQ | GEQ | EQL | EQG | AND | EQEQ | OR;
+EXP         ::= EXP AND EXP
+            | EXP OR EXP
+            | NOT EXP
+            | EXP EQEQ EXP
+            | EXP LT EXP
+            | EXP GT EXP
+            | EXP LEQ EXP
+            | EXP EQL EXP
+            | EXP GEQ EXP
+            | EXP EQG EXP
+            | EXP PLUS EXP
+            | EXP MINUS EXP
+            | EXP STAR EXP
+            | EXP DIV EXP
+            | RO EXP RC
+            | AVAR
+            | ID
+            | INT
+            | DOUBLE
+            | MINUS INT %prec UMINUS
+            | MINUS DOUBLE %prec UMINUS;
